@@ -23,9 +23,9 @@ export function Header() {
           </div>
           <div className="flex gap-3 text-primary items-center">
             <IconCategory />
-            <p>Categories</p>
+            <p className="text-sm">Categories</p>
           </div>
-          <div className="text-primary flex gap-10">
+          <div className="text-primary flex gap-10 text-sm">
             <p>Movies</p>
             <p>TV Shows</p>
             <p>Login</p>
