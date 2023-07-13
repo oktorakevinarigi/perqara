@@ -8,3 +8,4 @@ export {
   type OptionalFetcherArgs,
   type Query,
 } from "./fetch";
+export { cn } from "./cn";
