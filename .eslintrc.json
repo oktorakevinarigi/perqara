@@ -1,3 +1,46 @@
 {
-  "extends": "next/core-web-vitals"
+  "root": true,
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:sonarjs/recommended",
+    "prettier"
+  ],
+  "plugins": ["sonarjs", "prettier"],
+  "rules": {
+    "react/no-array-index-key": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-redeclare": "error",
+    "import/no-cycle": [
+      "error",
+      {
+        "maxDepth": 10
+      }
+    ],
+    "react/jsx-curly-brace-presence": [
+      "error",
+      {
+        "props": "never",
+        "children": "never"
+      }
+    ],
+    "prettier/prettier": ["error"],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ]
+      }
+    ]
+  }
 }
