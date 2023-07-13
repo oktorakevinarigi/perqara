@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   IconMovie,
   IconSearch,
@@ -26,9 +27,9 @@ export function Header() {
             <p className="text-sm">Categories</p>
           </div>
           <div className="text-primary flex gap-10 text-sm">
-            <p>Movies</p>
-            <p>TV Shows</p>
-            <p>Login</p>
+            <Link href="/movies">Movies</Link>
+            <Link href="/tv">TV Shows</Link>
+            <Link href="/login">Login</Link>
           </div>
         </div>
       </SimpleBlock>
