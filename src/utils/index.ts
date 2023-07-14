@@ -1,5 +1,5 @@
 export { Providers, ReactQueryHydrate } from "./react-query";
-export { getQueryClient } from "./query-client";
+export { getQueryClient, queryToString, cleanQuery } from "./query-client";
 export {
   fetchBrowser,
   fetchNode,
@@ -9,3 +9,4 @@ export {
   type Query,
 } from "./fetch";
 export { cn } from "./cn";
+export { useDebounce } from "./debounce";

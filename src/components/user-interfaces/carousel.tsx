@@ -12,7 +12,7 @@ type CarouselProps<Item> = {
   showDotButton?: boolean;
 };
 
-const TWEEN_FACTOR = 4.2;
+const TWEEN_FACTOR = 6.2;
 
 const numberWithinRange = (number: number, min: number, max: number): number =>
   Math.min(Math.max(number, min), max);

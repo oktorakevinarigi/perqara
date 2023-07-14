@@ -1,17 +1,26 @@
 "use client";
 import Image from "next/image";
+import dayjs from "dayjs";
+import Link from "next/link";
+
+import { ULR_IMAGE } from "@/constants";
 import { Carousel, IconStar } from "../user-interfaces";
+import { useGetMoviePopular, useGetMovieGenres } from "./movie-queries";
 
 export function Banner() {
+  const query = { language: "en-US", page: "1", region: "" };
+  const getMoviePopular = useGetMoviePopular(query);
+  const getMovieGenres = useGetMovieGenres({ language: "en" });
+
   return (
     <div className="my-14">
       <Carousel
-        slides={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]}
+        slides={getMoviePopular.data?.results.slice(0, 6) || []}
         options={{ loop: true }}
-        renderSlide={() => (
-          <div className="flex items-center">
+        renderSlide={({ slide }) => (
+          <Link href={`/${slide.id}`} className="flex items-center">
             <Image
-              src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
+              src={ULR_IMAGE + slide.poster_path}
               width={243}
               height={364}
               alt=""
@@ -19,24 +28,33 @@ export function Banner() {
             <div className="bg-black text-white h-[324px] w-[300px] p-6">
               <div className="flex gap-1 items-center">
                 <IconStar width="18px" height="18px" />
-                <p className="text-lg font-bold">7.3</p>
+                <p className="text-lg font-bold">{slide.vote_average}</p>
               </div>
               <div className="flex flex-col gap-3">
-                <p className="text-[28px]">Space Sweepers</p>
+                <p className="text-[28px] leading-[28px]">{slide.title}</p>
                 <div className="flex gap-1 font-normal items-center">
-                  <p>2021</p>
+                  <p>
+                    {slide.release_date
+                      ? dayjs(slide.release_date).format("YYYY")
+                      : null}
+                  </p>
                   <div className="h-[6px] w-[6px] rounded-full bg-white bg-opacity-50" />
-                  <p>Sci-Fi</p>
+                  <p>
+                    {slide.genre_ids
+                      .map((item) => {
+                        return getMovieGenres.data?.genres.find(
+                          (genre) => genre.id === item,
+                        )?.name;
+                      })
+                      .join(", ")}
+                  </p>
                 </div>
-                <p className="text-xs font-normal">
-                  When the crew of a space junk collector ship called The
-                  Victory discovers a humanoid robot named Dorothy thats known
-                  to be a weapon of mass destruction, they get involved in a
-                  risky business deal which puts their lives at stake.
+                <p className="text-xs font-normal line-clamp-5">
+                  {slide.overview}
                 </p>
               </div>
             </div>
-          </div>
+          </Link>
         )}
       />
     </div>

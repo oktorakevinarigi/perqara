@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import CoookieBrowser from "js-cookie";
-import { cookies } from "next/headers";
 import { saveAs } from "file-saver";
 
 type ISource = "browser" | "server";
@@ -61,6 +60,8 @@ function getAuthorization({
       return { authorization: `Bearer ${result[tokenName]}` };
     }
   } else if (source === "server") {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { cookies } = require("next/headers");
     const result = cookies().get(tokenName);
     if (result) {
       return { authorization: `Bearer ${result.value}` };
@@ -76,11 +77,14 @@ function getHeaders({
   if (headers) {
     return {
       ...getDefaultHeaders({ requestType: options?.requestType || "json" }),
-      ...getAuthorization({ tokenName: options?.tokenName || "", source }),
+      ...getAuthorization({ tokenName: options?.tokenName || "token", source }),
       ...headers,
     };
   }
-  return getDefaultHeaders({ requestType: options?.requestType || "json" });
+  return {
+    ...getDefaultHeaders({ requestType: options?.requestType || "json" }),
+    ...getAuthorization({ tokenName: options?.tokenName || "token", source }),
+  };
 }
 
 export function getErrorMessage(error: any) {
