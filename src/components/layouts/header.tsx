@@ -9,7 +9,7 @@ import { SimpleBlock } from "./simple-block";
 
 export function Header() {
   return (
-    <div className="h-[66px] w-full bg-gray-default flex items-center">
+    <div className="h-[66px] w-full bg-black bg-opacity-5 flex items-center absolute left-0 right-0 top-0 z-10">
       <SimpleBlock className="w-ful">
         <div className="flex w-full justify-between items-center">
           <IconMovie />
@@ -17,7 +17,7 @@ export function Header() {
             <IconSearchMovie className="absolute top-1/2 left-3 -translate-y-[50%]" />
             <input
               type="text"
-              className="rounded w-[571px] h-9 bg-body px-10 text-white"
+              className="rounded w-[571px] h-9 bg-body bg-opacity-10 px-10 text-white outline-none"
               placeholder="Find movie"
             />
             <IconSearch className="absolute right-3 top-1/2 -translate-y-[50%]" />

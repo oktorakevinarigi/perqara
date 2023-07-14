@@ -3,15 +3,15 @@ import { DiscoverMovies, Banner } from "../feature";
 
 export function HomePage() {
   return (
-    <div>
-      <Header />
-      <section className="sandbox__carousel">
-        <Banner />
-      </section>
+    <>
+      <div className="bg-gray-default h-[66px]">
+        <Header />
+      </div>
+      <Banner />
       <SimpleBlock>
         <DiscoverMovies />
       </SimpleBlock>
       <Footer />
-    </div>
+    </>
   );
 }
