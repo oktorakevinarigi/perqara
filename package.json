@@ -13,6 +13,7 @@
     "lint": "next lint --fix"
   },
   "dependencies": {
+    "@radix-ui/react-select": "^1.2.2",
     "@tanstack/react-query": "^4.29.19",
     "@tanstack/react-query-devtools": "^4.29.19",
     "@types/node": "20.4.2",
@@ -26,6 +27,7 @@
     "eslint-config-next": "13.4.9",
     "file-saver": "^2.0.5",
     "js-cookie": "^3.0.5",
+    "lucide-react": "^0.260.0",
     "next": "13.4.9",
     "postcss": "8.4.25",
     "react": "18.2.0",

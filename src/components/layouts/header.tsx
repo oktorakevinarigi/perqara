@@ -12,7 +12,9 @@ export function Header() {
     <div className="h-[66px] w-full bg-black bg-opacity-5 flex items-center absolute left-0 right-0 top-0 z-10">
       <SimpleBlock className="w-ful">
         <div className="flex w-full justify-between items-center">
-          <IconMovie />
+          <Link href="/">
+            <IconMovie />
+          </Link>
           <div className="relative">
             <IconSearchMovie className="absolute top-1/2 left-3 -translate-y-[50%]" />
             <input
