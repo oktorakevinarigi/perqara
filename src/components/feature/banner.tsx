@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import Link from "next/link";
 
 import { ULR_IMAGE } from "@/constants";
+import { getGenre } from "@/utils";
 import { Carousel, IconStar } from "../user-interfaces";
 import { useGetMoviePopular, useGetMovieGenres } from "./movie-queries";
 
@@ -40,13 +41,10 @@ export function Banner() {
                   </p>
                   <div className="h-[6px] w-[6px] rounded-full bg-white bg-opacity-50" />
                   <p>
-                    {slide.genre_ids
-                      .map((item) => {
-                        return getMovieGenres.data?.genres.find(
-                          (genre) => genre.id === item,
-                        )?.name;
-                      })
-                      .join(", ")}
+                    {getGenre(
+                      slide.genre_ids,
+                      getMovieGenres.data?.genres || [],
+                    )}
                   </p>
                 </div>
                 <p className="text-xs font-normal line-clamp-5">

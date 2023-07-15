@@ -10,3 +10,4 @@ export {
 } from "./fetch";
 export { cn } from "./cn";
 export { useDebounce } from "./debounce";
+export { getGenre } from "./movie";
