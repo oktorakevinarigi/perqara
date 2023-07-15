@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Highlighter from "react-highlight-words";
 
 import { useDebounce } from "@/utils";
 import {
@@ -8,15 +10,23 @@ import {
   IconSearch,
   IconSearchMovie,
   IconCategory,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
 } from "@/components/user-interfaces";
-import { useGetMovieSearch } from "../feature/movie-queries";
+import { useGetMovieSearch, useGetMovieGenres } from "../feature/movie-queries";
 import { SimpleBlock } from "./simple-block";
 import { Spinner } from "./spinner";
 
 export function Header() {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [isList, setIsList] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const deb = useDebounce(search, 500);
+
+  const getMovieGenres = useGetMovieGenres({ language: "en" });
   const getMovieSearch = useGetMovieSearch(
     {
       query: deb,
@@ -48,6 +58,11 @@ export function Header() {
 
   function onChangeSearch(value: string) {
     setSearch(value);
+  }
+
+  function onMovies(id: number) {
+    setIsOpen(false);
+    router.push(`/movies?genre=${id}`);
   }
 
   return (
@@ -86,11 +101,14 @@ export function Header() {
                               key={item.id}
                               href={`/${item.id}`}
                               tabIndex={0}
-                              className="flex justify-between cursor-pointer text-primary hover:bg-blue-50 hover:text-black p-2"
+                              className="text-primary flex justify-between cursor-pointer hover:bg-blue-50 hover:text-black p-2"
                             >
-                              <p className=" line-clamp-1 text-sm">
-                                {item.title}
-                              </p>
+                              <Highlighter
+                                highlightClassName="font-semibold bg-transparent text-primary"
+                                searchWords={[deb]}
+                                textToHighlight={item.title}
+                                className="font-light line-clamp-1 text-sm"
+                              />
                             </Link>
                           );
                         }
@@ -105,11 +123,33 @@ export function Header() {
               </div>
             )}
           </div>
-          <div className="flex gap-3 text-primary items-center">
-            <IconCategory />
-            <p className="text-sm">Categories</p>
+          <div className="flex gap-3 items-center border-none">
+            <DropdownMenu
+              open={isOpen}
+              onOpenChange={() => setIsOpen((prev) => !prev)}
+            >
+              <DropdownMenuTrigger className="outline-none">
+                <div className="flex gap-3 items-center text-sm font-semibold">
+                  <IconCategory />
+                  <p className="text-primary">Categories</p>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white">
+                {getMovieGenres.data?.genres.map((item) => (
+                  <DropdownMenuLabel
+                    key={item.id}
+                    className="text-xs font-semibold text-[#1E232B] cursor-pointer hover:bg-black/50 hover:text-white"
+                    onClick={() => {
+                      onMovies(item.id);
+                    }}
+                  >
+                    {item.name}
+                  </DropdownMenuLabel>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-          <div className="text-primary flex gap-10 text-sm">
+          <div className="text-primary flex gap-10 text-sm font-semibold">
             <Link href="/movies">Movies</Link>
             <Link href="/tv">TV Shows</Link>
             <Link href="/login">Login</Link>

@@ -10,3 +10,4 @@ export {
   SelectValue,
 } from "./select";
 export * from "./icons";
+export * from "./dropdown-menu";
