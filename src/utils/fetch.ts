@@ -25,6 +25,7 @@ type IFetch = { options?: IOptions; headers?: Headers };
 const DEFAULT_HEADERS = {
   Accept: "application/json",
   "Content-Type": "application/json",
+  authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZDU3MDFlNGFhZDliNzRiMmY2Zjk0MTk2OWQxNTYzZCIsInN1YiI6IjY0YTIzYmY2ZDQwMGYzMDBlYmZlNjIxOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.onf64C683ZIDbi4R8EW1PafgzW8_pBFUePoDJ5uaa6c`,
 };
 
 function getDefaultHeaders({ requestType }: Pick<IOptions, "requestType">) {
@@ -57,18 +58,14 @@ function getAuthorization({
   if (source === "browser") {
     const result = CoookieBrowser.get();
     if (result[tokenName]) {
-      return {
-        authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZDU3MDFlNGFhZDliNzRiMmY2Zjk0MTk2OWQxNTYzZCIsInN1YiI6IjY0YTIzYmY2ZDQwMGYzMDBlYmZlNjIxOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.onf64C683ZIDbi4R8EW1PafgzW8_pBFUePoDJ5uaa6c`,
-      };
+      return { authorization: `Bearer ${result[tokenName]}` };
     }
   } else if (source === "server") {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { cookies } = require("next/headers");
     const result = cookies().get(tokenName);
     if (result) {
-      return {
-        authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZDU3MDFlNGFhZDliNzRiMmY2Zjk0MTk2OWQxNTYzZCIsInN1YiI6IjY0YTIzYmY2ZDQwMGYzMDBlYmZlNjIxOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.onf64C683ZIDbi4R8EW1PafgzW8_pBFUePoDJ5uaa6c`,
-      };
+      return { authorization: `Bearer ${result.value}` };
     }
   }
 }
