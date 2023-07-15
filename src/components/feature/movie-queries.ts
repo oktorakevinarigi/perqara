@@ -13,6 +13,8 @@ import {
   MovieDetailResponse,
   MovieSearchResponse,
   MovieGenresResponse,
+  MovieRecommendationsResponse,
+  MovieReviewsResponse,
 } from "./movie-model";
 
 type MovieQuery = {
@@ -35,6 +37,9 @@ type MovieSearchQuery = {
   year: string;
 };
 type MovieGenresQuery = { language: string };
+type MovieRecomendationsQuery = { movie_id: string };
+type MovieReviewsQuery = { movie_id: string };
+
 export const MoviePlayingKeys = {
   all: ["MOVIE_PLAYING"],
   lists: () => [...MoviePlayingKeys.all, "LISTS"],
@@ -82,6 +87,24 @@ export const MovieGenresKeys = {
   lists: () => [...MovieGenresKeys.all, "LISTS"],
   list: (query: MovieGenresQuery) => [
     ...MovieGenresKeys.lists(),
+    cleanQuery(query),
+  ],
+};
+
+export const MovieRecommendationsKeys = {
+  all: ["MOVIE_RECOMMENDATIONS"],
+  lists: () => [...MovieRecommendationsKeys.all, "LISTS"],
+  list: (query: MovieRecomendationsQuery) => [
+    ...MovieRecommendationsKeys.lists(),
+    cleanQuery(query),
+  ],
+};
+
+export const MovieReviewsKeys = {
+  all: ["MOVIE_REVIEWS"],
+  lists: () => [...MovieReviewsKeys.all, "LISTS"],
+  list: (query: MovieReviewsQuery) => [
+    ...MovieReviewsKeys.lists(),
     cleanQuery(query),
   ],
 };
@@ -243,6 +266,54 @@ export function useGetMovieGenres<TData = MovieGenresCache>(
     () => {
       const fetch = fetchBrowser();
       return getMovieGenres({ fetch, query });
+    },
+    options,
+  );
+}
+
+export const getMovieRecommedations = async ({
+  fetch,
+  query,
+}: FetcherArgs<MovieRecomendationsQuery>) => {
+  return await fetch.get<MovieRecommendationsResponse>(
+    `${URL_API}/3/movie/${query.movie_id}/recommendations`,
+  );
+};
+export type MovieRecommedationsCache = Awaited<
+  ReturnType<typeof getMovieRecommedations>
+>;
+export function useGetMovieRecommendations<TData = MovieRecommedationsCache>(
+  query: MovieRecomendationsQuery,
+  options?: UseQueryOptions<MovieRecommedationsCache, FetchError, TData>,
+) {
+  return useQuery<MovieRecommedationsCache, FetchError, TData>(
+    MovieRecommendationsKeys.list(query),
+    () => {
+      const fetch = fetchBrowser();
+      return getMovieRecommedations({ fetch, query });
+    },
+    options,
+  );
+}
+
+export const getMovieReviews = async ({
+  fetch,
+  query,
+}: FetcherArgs<MovieReviewsQuery>) => {
+  return await fetch.get<MovieReviewsResponse>(
+    `${URL_API}/3/movie/${query.movie_id}/reviews`,
+  );
+};
+export type MovieReviewsCache = Awaited<ReturnType<typeof getMovieReviews>>;
+export function useGetMovieReviews<TData = MovieReviewsCache>(
+  query: MovieReviewsQuery,
+  options?: UseQueryOptions<MovieReviewsCache, FetchError, TData>,
+) {
+  return useQuery<MovieReviewsCache, FetchError, TData>(
+    MovieReviewsKeys.list(query),
+    () => {
+      const fetch = fetchBrowser();
+      return getMovieReviews({ fetch, query });
     },
     options,
   );

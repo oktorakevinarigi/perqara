@@ -10,4 +10,10 @@ export {
   MoviePopularKeys,
   getMoviePopular,
   useGetMovieSearch,
+  getMovieDetail,
+  MovieKeys,
+  getMovieRecommedations,
+  MovieRecommendationsKeys,
+  getMovieReviews,
+  MovieReviewsKeys,
 } from "./movie-queries";

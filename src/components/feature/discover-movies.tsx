@@ -79,7 +79,7 @@ export function DiscoverMovies() {
       <div className="flex justify-between flex-wrap">
         {getMoviePopular.isLoading ||
         (getMovieUpcoming.isLoading && state === "upcoming") ? (
-          <div className="flex justify-center w-full">
+          <div className="flex justify-center w-full mb-9">
             <Spinner />
           </div>
         ) : state === "popular" ? (

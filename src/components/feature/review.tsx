@@ -1,41 +1,66 @@
-import { IconStar } from "../user-interfaces";
+"use client";
+import { useParams } from "next/navigation";
+import dayjs from "dayjs";
 
-function CardReview() {
+import { IconStar } from "../user-interfaces";
+import { useGetMovieReviews } from "./movie-queries";
+
+type ICardReview = {
+  name: string;
+  date: string;
+  ratings: number | null;
+  content: string;
+};
+
+function CardReview(item: ICardReview) {
   return (
-    <div className="bg-[#F9F9F9] rounded-[14px] h-[284px] p-6">
+    <div className="bg-[#F9F9F9] rounded-[14px] p-6 w-[582px]">
       <div className="flex justify-between mb-6">
         <div>
-          <p className="text-sm font-bold">SWITCH.</p>
-          <p className="text-xs text-gray-default">December 18, 2020</p>
+          <p className="text-sm font-bold">{item.name}</p>
+          <p className="text-xs text-gray-default">{item.date}</p>
         </div>
-        <div className="bg-[#C4C4C4] bg-opacity-20 p-1 w-24 flex rounded-md gap-[6px]">
-          <IconStar className="mt-2" />
-          <p className="text-4xl font-semibold">7.0</p>
-        </div>
+        {item.ratings ? (
+          <div className="bg-[#C4C4C4] bg-opacity-20 p-1 flex rounded-md gap-[6px]">
+            <IconStar className="mt-2" />
+            <p className="text-4xl font-semibold">{item.ratings}</p>
+          </div>
+        ) : null}
       </div>
-      <p className="italic text-sm ">
-        It isnt as easy as saying Wonder Woman 1984 is a good or bad movie. The
-        pieces are there, and there are moments I adore, but it does come across
-        as a bit of a mess, even though the action sequences are breathtaking.
-        If youre a fan of the original film, youll be more willing to take the
-        ride, but for those more indifferent, it may be a bit of a blander sit.
-        If you can and are planning to watch it, the theatrical experience is
-        the way to go - there is nothing like seeing these stunning sets, fun
-        action scenes and hearing Zimmers jaw-dropping score like on the big
-        screen. - Chris dos Santos... read the rest.
-      </p>
+      <p className="italic text-sm ">{item.content}</p>
     </div>
   );
 }
 
 export function Review() {
+  const router = useParams();
+  const id = router.id;
+  const getMovieReviews = useGetMovieReviews({ movie_id: id });
+
+  if (!getMovieReviews.data?.results.length) {
+    return null;
+  }
+
   return (
     <div>
       <p className="text-[#F00] text-sm font-semibold mb-6">REVIEWS</p>
 
       <div className="flex justify-between gap-[34px]">
-        {CardReview()}
-        {CardReview()}
+        {getMovieReviews.data?.results
+          .slice(0, 2)
+          .map((item) => (
+            <CardReview
+              key={item.id}
+              name={item.author_details.name}
+              date={
+                item.updated_at
+                  ? dayjs(item.updated_at).format("MMMM DD, YYYY")
+                  : ""
+              }
+              content={item.content}
+              ratings={item.author_details.rating}
+            />
+          ))}
       </div>
     </div>
   );

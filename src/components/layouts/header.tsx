@@ -51,7 +51,7 @@ export function Header() {
   }
 
   return (
-    <div className="h-[66px] w-full bg-black bg-opacity-5 flex items-center absolute left-0 right-0 top-0 z-10">
+    <div className="h-[66px] w-full bg-black bg-opacity-5 flex items-center absolute left-0 right-0 top-0 z-50">
       <SimpleBlock className="w-ful">
         <div className="flex w-full justify-between items-center">
           <Link href="/">
@@ -73,7 +73,7 @@ export function Header() {
 
             {/* List Search */}
             {isList && (
-              <div className="absolute z-10 left-0 top-11">
+              <div className="absolute z-50 left-0 top-11">
                 <div className="inset-0 flex items-end justify-center text-center sm:items-center">
                   <div className="bg-black bg-opacity-90 px-4 pb-4 pt-5 sm:p-6 sm:pb-4 space-y-2 transform rounded-lg text-left shadow-xl transition-all md:w-[630px] w-[223px] max-h-[300px] overflow-y-auto">
                     {getMovieSearch.isFetching ? (
@@ -84,7 +84,7 @@ export function Header() {
                           return (
                             <Link
                               key={item.id}
-                              href={`/movie/${item.id}`}
+                              href={`/${item.id}`}
                               tabIndex={0}
                               className="flex justify-between cursor-pointer text-primary hover:bg-blue-50 hover:text-black p-2"
                             >
