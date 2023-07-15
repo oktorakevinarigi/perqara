@@ -1,4 +1,10 @@
-import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
+import {
+  useQuery,
+  useInfiniteQuery,
+  type UseQueryOptions,
+  type InfiniteData,
+  type UseInfiniteQueryOptions,
+} from "@tanstack/react-query";
 
 import {
   FetcherArgs,
@@ -39,6 +45,12 @@ type MovieSearchQuery = {
 type MovieGenresQuery = { language: string };
 type MovieRecomendationsQuery = { movie_id: string };
 type MovieReviewsQuery = { movie_id: string };
+type MovieDiscoverQuery = {
+  language: string;
+  page: string;
+  with_genres: string;
+  sort_by: string;
+};
 
 export const MoviePlayingKeys = {
   all: ["MOVIE_PLAYING"],
@@ -105,6 +117,15 @@ export const MovieReviewsKeys = {
   lists: () => [...MovieReviewsKeys.all, "LISTS"],
   list: (query: MovieReviewsQuery) => [
     ...MovieReviewsKeys.lists(),
+    cleanQuery(query),
+  ],
+};
+
+export const MovieDiscoverKeys = {
+  all: ["MOVIE_DISCOVER"],
+  infiniteLists: () => [...MovieDiscoverKeys.all, "INFINITE_LISTS"],
+  infiniteList: (query: MovieDiscoverQuery) => [
+    ...MovieDiscoverKeys.infiniteLists(),
     cleanQuery(query),
   ],
 };
@@ -317,4 +338,47 @@ export function useGetMovieReviews<TData = MovieReviewsCache>(
     },
     options,
   );
+}
+
+export const getMovieDiscover = async ({
+  fetch,
+  query,
+}: FetcherArgs<MovieDiscoverQuery>) => {
+  return await fetch.get<MovieSearchResponse>(
+    `${URL_API}/3/discover/movie${queryToString(query)}`,
+  );
+};
+export type MovieDiscoverCache = Awaited<ReturnType<typeof getMovieDiscover>>;
+
+export type InfiniteMovieDiscoverCache = InfiniteData<MovieDiscoverCache>;
+export function useGetInfiniteMovieDiscover<TData = InfiniteMovieDiscoverCache>(
+  query: MovieDiscoverQuery,
+  options?: UseInfiniteQueryOptions<MovieDiscoverCache, FetchError, TData>,
+) {
+  const result = useInfiniteQuery<MovieDiscoverCache, FetchError, TData>(
+    MovieDiscoverKeys.infiniteList(query),
+    async ({ pageParam = query.page }) => {
+      const fetch = fetchBrowser();
+      return getMovieDiscover({
+        fetch,
+        query: { ...query, page: pageParam || "1" },
+      });
+    },
+    {
+      select: options?.select as unknown as (
+        data: InfiniteMovieDiscoverCache,
+      ) => InfiniteData<TData>,
+      getNextPageParam: (lastPage) => {
+        if (lastPage.results.length < 20) {
+          return undefined;
+        }
+        return lastPage.page + 1;
+      },
+      ...options,
+    },
+  );
+  return {
+    ...result,
+    data: result.data as unknown as TData,
+  };
 }

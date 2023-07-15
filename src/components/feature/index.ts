@@ -16,4 +16,6 @@ export {
   MovieRecommendationsKeys,
   getMovieReviews,
   MovieReviewsKeys,
+  getMovieDiscover,
+  MovieDiscoverKeys,
 } from "./movie-queries";
