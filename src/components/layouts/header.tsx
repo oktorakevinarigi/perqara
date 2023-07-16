@@ -77,7 +77,7 @@ export function Header() {
             id="container"
             ref={boxListRef}
             type="text"
-            className="rounded w-full md:w-60 h-9 lg:w-[540px] bg-body bg-opacity-10 px-10 text-white outline-none"
+            className="rounded w-full md:w-60 h-9 lg:w-[540px] bg-body bg-opacity-40 px-10 text-white outline-none"
             placeholder="Find movie"
             onChange={(e) => onChangeSearch(e.target.value)}
             onClick={() => setIsList(true)}
@@ -122,13 +122,13 @@ export function Header() {
             </div>
           )}
         </div>
-        <div className="flex gap-3 items-center border-none">
+        <div className="flex items-center border-none ml-2">
           <DropdownMenu
             open={isOpen}
             onOpenChange={() => setIsOpen((prev) => !prev)}
           >
             <DropdownMenuTrigger className="outline-none">
-              <div className="flex gap-3 items-center text-sm font-semibold">
+              <div className="flex gap-1 items-center text-sm font-semibold">
                 <IconCategory />
                 <p className="text-primary">Categories</p>
               </div>
@@ -148,10 +148,14 @@ export function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="text-primary md:flex gap-8 text-sm font-semibold sm:hidden hidden">
+        <div className="text-primary md:flex gap-8 text-sm font-semibold ml-4 sm:ml-0">
           <Link href="/movies">Movies</Link>
-          <Link href="/tv">TV Shows</Link>
-          <Link href="/login">Login</Link>
+          <Link href="/tv" className="md:block hidden">
+            TV Shows
+          </Link>
+          <Link href="/login" className="md:block hidden">
+            Login
+          </Link>
         </div>
       </SimpleBlock>
     </div>

@@ -52,23 +52,10 @@ type MovieDiscoverQuery = {
   sort_by: string;
 };
 
-export const MoviePlayingKeys = {
-  all: ["MOVIE_PLAYING"],
-  lists: () => [...MoviePlayingKeys.all, "LISTS"],
-  list: (query: MovieQuery) => [...MoviePlayingKeys.lists(), cleanQuery(query)],
-};
 export const MoviePopularKeys = {
   all: ["MOVIE_POPULAR"],
   lists: () => [...MoviePopularKeys.all, "LISTS"],
   list: (query: MovieQuery) => [...MoviePopularKeys.lists(), cleanQuery(query)],
-};
-export const MovieTopRatedKeys = {
-  all: ["MOVIE_TOP_RATED"],
-  lists: () => [...MovieTopRatedKeys.all, "LISTS"],
-  list: (query: MovieQuery) => [
-    ...MovieTopRatedKeys.lists(),
-    cleanQuery(query),
-  ],
 };
 export const MovieUpcomingKeys = {
   all: ["MOVIE_UPCOMING"],
@@ -130,35 +117,13 @@ export const MovieDiscoverKeys = {
   ],
 };
 
-export const getMoviePlaying = async ({
-  fetch,
-  query,
-}: FetcherArgs<MovieQuery>) => {
-  return await fetch.get<MovieListResponse>(
-    `${URL_API}/3/movie/now_playing${queryToString(query)}`,
-  );
-};
-export type MoviePlayingCache = Awaited<ReturnType<typeof getMoviePlaying>>;
-export function useGetMoviePlaying<TData = MoviePlayingCache>(
-  query: MovieQuery,
-  options?: UseQueryOptions<MoviePlayingCache, FetchError, TData>,
-) {
-  return useQuery<MoviePlayingCache, FetchError, TData>(
-    MoviePlayingKeys.list(query),
-    () => {
-      const fetch = fetchBrowser();
-      return getMoviePlaying({ fetch, query });
-    },
-    options,
-  );
-}
-
 export const getMoviePopular = async ({
   fetch,
   query,
 }: FetcherArgs<MovieQuery>) => {
   return await fetch.get<MovieListResponse>(
     `${URL_API}/3/movie/popular${queryToString(query)}`,
+    { options: { config: { next: { revalidate: 60 } } } },
   );
 };
 export type MoviePopularCache = Awaited<ReturnType<typeof getMoviePopular>>;
@@ -171,29 +136,6 @@ export function useGetMoviePopular<TData = MoviePopularCache>(
     () => {
       const fetch = fetchBrowser();
       return getMoviePopular({ fetch, query });
-    },
-    options,
-  );
-}
-
-export const getMovieTopRated = async ({
-  fetch,
-  query,
-}: FetcherArgs<MovieQuery>) => {
-  return await fetch.get<MovieListResponse>(
-    `${URL_API}/3/movie/top_rated${queryToString(query)}`,
-  );
-};
-export type MovieTopRatedCache = Awaited<ReturnType<typeof getMovieTopRated>>;
-export function useGetMovieTopRated<TData = MovieTopRatedCache>(
-  query: MovieQuery,
-  options?: UseQueryOptions<MovieTopRatedCache, FetchError, TData>,
-) {
-  return useQuery<MovieTopRatedCache, FetchError, TData>(
-    MovieTopRatedKeys.list(query),
-    () => {
-      const fetch = fetchBrowser();
-      return getMovieTopRated({ fetch, query });
     },
     options,
   );
@@ -229,6 +171,7 @@ export const getMovieDetail = async ({
   const { movie_id, ...rest } = query;
   return await fetch.get<MovieDetailResponse>(
     `${URL_API}/3/movie/${movie_id}${queryToString(rest)}`,
+    { options: { config: { next: { revalidate: 60 } } } },
   );
 };
 export type MovieDetailCache = Awaited<ReturnType<typeof getMovieDetail>>;
@@ -275,6 +218,7 @@ export const getMovieGenres = async ({
 }: FetcherArgs<MovieGenresQuery>) => {
   return await fetch.get<MovieGenresResponse>(
     `${URL_API}/3/genre/movie/list${queryToString(query)}`,
+    { options: { config: { next: { revalidate: 60 } } } },
   );
 };
 export type MovieGenresCache = Awaited<ReturnType<typeof getMovieGenres>>;
@@ -298,6 +242,7 @@ export const getMovieRecommedations = async ({
 }: FetcherArgs<MovieRecomendationsQuery>) => {
   return await fetch.get<MovieRecommendationsResponse>(
     `${URL_API}/3/movie/${query.movie_id}/recommendations`,
+    { options: { config: { next: { revalidate: 60 } } } },
   );
 };
 export type MovieRecommedationsCache = Awaited<
@@ -323,6 +268,7 @@ export const getMovieReviews = async ({
 }: FetcherArgs<MovieReviewsQuery>) => {
   return await fetch.get<MovieReviewsResponse>(
     `${URL_API}/3/movie/${query.movie_id}/reviews`,
+    { options: { config: { next: { revalidate: 60 } } } },
   );
 };
 export type MovieReviewsCache = Awaited<ReturnType<typeof getMovieReviews>>;
@@ -346,6 +292,7 @@ export const getMovieDiscover = async ({
 }: FetcherArgs<MovieDiscoverQuery>) => {
   return await fetch.get<MovieSearchResponse>(
     `${URL_API}/3/discover/movie${queryToString(query)}`,
+    { options: { config: { next: { revalidate: 60 } } } },
   );
 };
 export type MovieDiscoverCache = Awaited<ReturnType<typeof getMovieDiscover>>;

@@ -26,7 +26,7 @@ function getCard(item: IGetCard, genres: { id: number; name: string }[]) {
     <div key={item.id}>
       <Card
         id={item.id}
-        urlImage={ULR_IMAGE + item.poster_path}
+        urlImage={item.poster_path ? ULR_IMAGE + item.poster_path : ""}
         title={item.title}
         year={item.release_date ? dayjs(item.release_date).format("YYYY") : ""}
         ratings={item.vote_average}

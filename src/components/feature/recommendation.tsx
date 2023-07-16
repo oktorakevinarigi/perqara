@@ -28,7 +28,7 @@ export function Recommendation() {
           <div key={item.id}>
             <Card
               id={item.id}
-              urlImage={ULR_IMAGE + item.poster_path}
+              urlImage={item.poster_path ? ULR_IMAGE + item.poster_path : ""}
               title={item.title}
               genre={getGenre(
                 item.genre_ids,

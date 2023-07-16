@@ -76,7 +76,7 @@ export function Filter() {
         Sort Result By
       </p>
       <div className="px-5 pt-5 pb-[31px] border-b border-white border-opacity-5">
-        <Select onValueChange={onSort} value={sort || ""}>
+        <Select onValueChange={onSort} value={sort || undefined}>
           <SelectTrigger className="bg-white bg-opacity-[0.13] h-9 text-primary border-none text-sm text-left">
             <SelectValue placeholder="Popularity" />
           </SelectTrigger>

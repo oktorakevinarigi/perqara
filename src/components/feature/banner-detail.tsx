@@ -24,7 +24,11 @@ export function BannerDetail() {
     <>
       <div className="h-[468px] bg-red-400 relative mb-8">
         <Image
-          src={ULR_IMAGE + getMovieDetail.data?.backdrop_path}
+          src={
+            getMovieDetail.data?.backdrop_path
+              ? ULR_IMAGE + getMovieDetail.data?.backdrop_path
+              : "/images/no-images.jpg"
+          }
           fill
           style={{ objectFit: "cover", objectPosition: "top" }}
           alt={getMovieDetail.data?.title || ""}
@@ -34,7 +38,11 @@ export function BannerDetail() {
         <SimpleBlock>
           <div className="absolute z-10 flex bottom-48 lg:-bottom-28">
             <Image
-              src={ULR_IMAGE + getMovieDetail.data?.poster_path}
+              src={
+                getMovieDetail.data?.poster_path
+                  ? ULR_IMAGE + getMovieDetail.data?.poster_path
+                  : "/images/no-images.jpg"
+              }
               width={220}
               height={330}
               alt={getMovieDetail.data?.title || ""}
@@ -64,7 +72,9 @@ export function BannerDetail() {
                   </p>
                 </div>
                 <div className="uppercase text-xs min-w-[80px]">
-                  <p className="text-black text-opacity-50">User Score</p>
+                  <p className="text-white text-opacity-50 font-medium">
+                    User Score
+                  </p>
                   <p className="text-white">
                     {getMovieDetail.data?.vote_count} Votes
                   </p>
@@ -72,30 +82,38 @@ export function BannerDetail() {
               </div>
               <Divider />
               <div className="uppercase text-xs">
-                <p className="text-black text-opacity-50">Status</p>
+                <p className="text-white text-opacity-50 font-medium">Status</p>
                 <p className="text-white">{getMovieDetail.data?.status}</p>
               </div>
               <Divider />
               <div className="uppercase text-xs">
-                <p className="text-black text-opacity-50">language</p>
+                <p className="text-white text-opacity-50 font-medium">
+                  language
+                </p>
                 <p className="text-white">
                   {getMovieDetail.data?.original_language}
                 </p>
               </div>
               <Divider />
               <div className="uppercase text-xs">
-                <p className="text-black text-opacity-50">budget</p>
+                <p className="text-white text-opacity-50 font-medium">budget</p>
                 <p className="text-white">${getMovieDetail.data?.budget}</p>
               </div>
-              <Divider />
-              <div className="uppercase text-xs">
-                <p className="text-black text-opacity-50">production</p>
-                <p className="text-white line-clamp-2 break-words">
-                  {getMovieDetail.data?.production_companies
-                    .map((item) => item.name)
-                    .join(", ")}
-                </p>
-              </div>
+              {getMovieDetail.data?.production_companies.length ? (
+                <>
+                  <Divider />
+                  <div className="uppercase text-xs">
+                    <p className="text-white text-opacity-50 font-medium">
+                      production
+                    </p>
+                    <p className="text-white line-clamp-2 break-words">
+                      {getMovieDetail.data?.production_companies
+                        .map((item) => item.name)
+                        .join(", ")}
+                    </p>
+                  </div>
+                </>
+              ) : null}
             </div>
           </SimpleBlock>
         </div>

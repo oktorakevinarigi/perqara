@@ -41,7 +41,7 @@ export function ContentMovies() {
             <div key={item.id}>
               <Card
                 id={item.id}
-                urlImage={ULR_IMAGE + item.poster_path}
+                urlImage={item.poster_path ? ULR_IMAGE + item.poster_path : ""}
                 genre={getGenre(
                   item.genre_ids,
                   getMovieGenres.data?.genres || [],
