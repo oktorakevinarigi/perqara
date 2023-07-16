@@ -33,12 +33,12 @@ export function ContentMovies() {
 
   return (
     <div className="flex flex-col flex-1">
-      <div className="flex flex-wrap gap-10">
+      <div className="flex flex-wrap gap-5 justify-center sm:justify-start">
         {getMovieDiscover.data?.pages
           .map((page) => page.results ?? [])
           .flat()
           .map((item) => (
-            <div key={item.id} className="mb-9">
+            <div key={item.id}>
               <Card
                 id={item.id}
                 urlImage={ULR_IMAGE + item.poster_path}

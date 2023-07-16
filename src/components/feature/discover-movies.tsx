@@ -23,7 +23,7 @@ type IGetCard = {
 
 function getCard(item: IGetCard, genres: { id: number; name: string }[]) {
   return (
-    <div key={item.id} className="mb-9">
+    <div key={item.id}>
       <Card
         id={item.id}
         urlImage={ULR_IMAGE + item.poster_path}
@@ -53,11 +53,13 @@ export function DiscoverMovies() {
     <>
       <div className="bg-[#E74C3C] h-[6px] w-28 mb-3" />
       <div className="flex justify-between mb-11">
-        <p className="text-primary font-semibold text-2xl">Discover Movies</p>
-        <div className="flex text-primary gap-5 text-sm">
+        <p className="text-primary font-semibold text-sm sm:text-2xl">
+          Discover Movies
+        </p>
+        <div className="flex text-primary gap-1 sm:gap-5 text-xs sm:text-sm">
           <div
             className={cn(
-              "px-4 py-[6px] rounded-full cursor-pointer",
+              "px-4 py-[6px] rounded-full cursor-pointer m-auto",
               state === "popular" ? "bg-[#FF0000]" : "bg-black/20",
             )}
             onClick={() => onChange("popular")}
@@ -66,7 +68,7 @@ export function DiscoverMovies() {
           </div>
           <div
             className={cn(
-              "text-primary px-4 py-[6px] rounded-full cursor-pointer",
+              "text-primary px-4 py-[6px] rounded-full cursor-pointer text-center",
               state === "upcoming" ? "bg-[#FF0000]" : "bg-black/20",
             )}
             onClick={() => onChange("upcoming")}
@@ -76,7 +78,7 @@ export function DiscoverMovies() {
         </div>
       </div>
 
-      <div className="flex justify-between flex-wrap">
+      <div className="flex gap-[25px] flex-wrap justify-center sm:justify-start">
         {getMoviePopular.isLoading ||
         (getMovieUpcoming.isLoading && state === "upcoming") ? (
           <div className="flex justify-center w-full mb-9">

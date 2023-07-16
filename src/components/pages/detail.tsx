@@ -3,7 +3,7 @@ import { BannerDetail, Review, Recommendation } from "../feature";
 
 export function DetailPage() {
   return (
-    <div>
+    <>
       <Header />
       <div className="bg-white">
         <BannerDetail />
@@ -15,6 +15,6 @@ export function DetailPage() {
         <Recommendation />
       </SimpleBlock>
       <Footer />
-    </div>
+    </>
   );
 }

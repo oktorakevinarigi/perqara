@@ -8,11 +8,10 @@ export function MoviesPage() {
         <Header />
       </div>
       <div className="bg-white bg-opacity-[0.05] w-full h-[315px] absolute -z-10" />
-      <div className="py-14">
-        <SimpleBlock>
-          <Movies />
-        </SimpleBlock>
-      </div>
+
+      <SimpleBlock className="py-14">
+        <Movies />
+      </SimpleBlock>
 
       <Footer />
     </>

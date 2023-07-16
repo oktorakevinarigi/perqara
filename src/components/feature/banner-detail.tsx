@@ -21,7 +21,7 @@ export function BannerDetail() {
   });
 
   return (
-    <div>
+    <>
       <div className="h-[468px] bg-red-400 relative mb-8">
         <Image
           src={ULR_IMAGE + getMovieDetail.data?.backdrop_path}
@@ -32,15 +32,16 @@ export function BannerDetail() {
         />
 
         <SimpleBlock>
-          <div className="absolute -bottom-28 z-10 flex">
+          <div className="absolute z-10 flex bottom-48 lg:-bottom-28">
             <Image
               src={ULR_IMAGE + getMovieDetail.data?.poster_path}
               width={220}
               height={330}
               alt={getMovieDetail.data?.title || ""}
               priority
+              className="hidden lg:block"
             />
-            <div className="text-white ml-[30px] mt-5">
+            <div className="text-white lg:ml-[30px] mt-5">
               <p className="text-lg">2020</p>
               <p className="text-4xl">{getMovieDetail.data?.title}</p>
               <p className="text-sm">
@@ -51,54 +52,61 @@ export function BannerDetail() {
             </div>
           </div>
         </SimpleBlock>
-        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 h-20 flex items-center gap-8 pl-[290px]">
-          <div className="flex items-center">
-            <div className="flex gap-4 items-center mr-3">
-              <IconStar height="32px" width="32px" />
-              <p className="text-4xl text-white">
-                {getMovieDetail.data?.vote_average}
-              </p>
+
+        <div className="absolute bottom-0 bg-black bg-opacity-50 left-0 right-0 ">
+          <SimpleBlock>
+            <div className="items-center gap-8 h-20 flex lg:ml-[250px] overflow-x-auto">
+              <div className="flex items-center">
+                <div className="flex gap-4 items-center mr-3">
+                  <IconStar height="32px" width="32px" />
+                  <p className="text-4xl text-white">
+                    {getMovieDetail.data?.vote_average}
+                  </p>
+                </div>
+                <div className="uppercase text-xs min-w-[80px]">
+                  <p className="text-black text-opacity-50">User Score</p>
+                  <p className="text-white">
+                    {getMovieDetail.data?.vote_count} Votes
+                  </p>
+                </div>
+              </div>
+              <Divider />
+              <div className="uppercase text-xs">
+                <p className="text-black text-opacity-50">Status</p>
+                <p className="text-white">{getMovieDetail.data?.status}</p>
+              </div>
+              <Divider />
+              <div className="uppercase text-xs">
+                <p className="text-black text-opacity-50">language</p>
+                <p className="text-white">
+                  {getMovieDetail.data?.original_language}
+                </p>
+              </div>
+              <Divider />
+              <div className="uppercase text-xs">
+                <p className="text-black text-opacity-50">budget</p>
+                <p className="text-white">${getMovieDetail.data?.budget}</p>
+              </div>
+              <Divider />
+              <div className="uppercase text-xs">
+                <p className="text-black text-opacity-50">production</p>
+                <p className="text-white line-clamp-2 break-words">
+                  {getMovieDetail.data?.production_companies
+                    .map((item) => item.name)
+                    .join(", ")}
+                </p>
+              </div>
             </div>
-            <div className="uppercase text-xs min-w-[80px]">
-              <p className="text-black text-opacity-50">User Score</p>
-              <p className="text-white">
-                {getMovieDetail.data?.vote_count} Votes
-              </p>
-            </div>
-          </div>
-          <Divider />
-          <div className="uppercase text-xs">
-            <p className="text-black text-opacity-50">Status</p>
-            <p className="text-white">{getMovieDetail.data?.status}</p>
-          </div>
-          <Divider />
-          <div className="uppercase text-xs">
-            <p className="text-black text-opacity-50">language</p>
-            <p className="text-white">
-              {getMovieDetail.data?.original_language}
-            </p>
-          </div>
-          <Divider />
-          <div className="uppercase text-xs">
-            <p className="text-black text-opacity-50">budget</p>
-            <p className="text-white">${getMovieDetail.data?.budget}</p>
-          </div>
-          <Divider />
-          <div className="uppercase text-xs">
-            <p className="text-black text-opacity-50">production</p>
-            <p className="text-white">
-              {getMovieDetail.data?.production_companies
-                .map((item) => item.name)
-                .join(", ")}
-            </p>
-          </div>
+          </SimpleBlock>
         </div>
       </div>
 
-      <div className="text-sm ml-[290px] max-w-[526px]">
-        <p className="text-[#F00] font-semibold">OVERVIEW</p>
-        <p className="leading-7">{getMovieDetail.data?.overview}</p>
-      </div>
-    </div>
+      <SimpleBlock className="text-sm w-full">
+        <div className="lg:max-w-[526px] lg:ml-[250px]">
+          <p className="text-[#F00] font-semibold">OVERVIEW</p>
+          <p className="leading-7">{getMovieDetail.data?.overview}</p>
+        </div>
+      </SimpleBlock>
+    </>
   );
 }

@@ -14,7 +14,7 @@ export function Banner() {
   const getMovieGenres = useGetMovieGenres({ language: "en" });
 
   return (
-    <div className="my-14">
+    <div className="my-14 hidden sm:block">
       <Carousel
         slides={getMoviePopular.data?.results.slice(0, 6) || []}
         options={{ loop: true }}
@@ -24,9 +24,9 @@ export function Banner() {
               src={ULR_IMAGE + slide.poster_path}
               width={243}
               height={364}
-              alt=""
+              alt={slide.title}
             />
-            <div className="bg-black text-white h-[324px] w-[300px] p-6">
+            <div className="bg-black text-white h-[324px] w-[300px] p-6 hidden lg:block">
               <div className="flex gap-1 items-center">
                 <IconStar width="18px" height="18px" />
                 <p className="text-lg font-bold">{slide.vote_average}</p>

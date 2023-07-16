@@ -23,9 +23,9 @@ export function Recommendation() {
         RECOMMENDATION MOVIES
       </p>
 
-      <div className="flex flex-wrap gap-10">
+      <div className="flex flex-wrap gap-10 justify-center md:justify-start">
         {getMovieRecommendations.data?.results.slice(0, 5).map((item) => (
-          <div key={item.id} className="mb-9">
+          <div key={item.id}>
             <Card
               id={item.id}
               urlImage={ULR_IMAGE + item.poster_path}

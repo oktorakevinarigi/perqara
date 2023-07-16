@@ -14,7 +14,7 @@ type ICardReview = {
 
 function CardReview(item: ICardReview) {
   return (
-    <div className="bg-[#F9F9F9] rounded-[14px] p-6 w-[582px]">
+    <div className="bg-[#F9F9F9] rounded-[14px] p-6 w-full sm:w-[582px]">
       <div className="flex justify-between mb-6">
         <div>
           <p className="text-sm font-bold">{item.name}</p>
@@ -42,10 +42,10 @@ export function Review() {
   }
 
   return (
-    <div>
+    <>
       <p className="text-[#F00] text-sm font-semibold mb-6">REVIEWS</p>
 
-      <div className="flex justify-between gap-[34px]">
+      <div className="flex flex-col justify-between gap-[34px] sm:flex-row">
         {getMovieReviews.data?.results
           .slice(0, 2)
           .map((item) => (
@@ -62,6 +62,6 @@ export function Review() {
             />
           ))}
       </div>
-    </div>
+    </>
   );
 }

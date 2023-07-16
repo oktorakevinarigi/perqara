@@ -10,7 +10,10 @@ export function SimpleBlock({ children, ...restProps }: SimpleBlockProps) {
   const { className, ...rest } = restProps;
   return (
     <div
-      className={cn("w-[1280px] max-w-[1280px] ms-auto me-auto", className)}
+      className={cn(
+        "max-w-[1200px] w-full ms-auto me-auto px-5 xl:px-0",
+        className,
+      )}
       {...rest}
     >
       {children}
