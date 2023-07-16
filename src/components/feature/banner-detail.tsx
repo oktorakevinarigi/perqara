@@ -23,6 +23,7 @@ export function BannerDetail() {
   return (
     <>
       <div className="h-[468px] bg-red-400 relative mb-8">
+        <div className="absolute top-0 left-0 right-0 bottom-0 z-10 bg-[#0E1723] bg-opacity-50" />
         <Image
           src={
             getMovieDetail.data?.backdrop_path
@@ -36,7 +37,7 @@ export function BannerDetail() {
         />
 
         <SimpleBlock>
-          <div className="absolute z-10 flex bottom-48 lg:-bottom-28">
+          <div className="absolute z-30 flex bottom-48 lg:-bottom-28">
             <Image
               src={
                 getMovieDetail.data?.poster_path
@@ -61,7 +62,7 @@ export function BannerDetail() {
           </div>
         </SimpleBlock>
 
-        <div className="absolute bottom-0 bg-black bg-opacity-50 left-0 right-0 ">
+        <div className="absolute bottom-0 bg-black bg-opacity-50 left-0 right-0 z-20">
           <SimpleBlock>
             <div className="items-center gap-8 h-20 flex lg:ml-[250px] overflow-x-auto">
               <div className="flex items-center">

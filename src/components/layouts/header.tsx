@@ -66,7 +66,7 @@ export function Header() {
   }
 
   return (
-    <div className="h-[66px] bg-black bg-opacity-5 flex items-center absolute left-0 right-0 top-0 z-50">
+    <div className="h-[66px] bg-white bg-opacity-5 flex items-center absolute left-0 right-0 top-0 z-50">
       <SimpleBlock className="w-full flex justify-between items-center">
         <Link href="/" className="sm:block hidden">
           <IconMovie />

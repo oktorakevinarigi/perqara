@@ -23,7 +23,7 @@ export function Recommendation() {
         RECOMMENDATION MOVIES
       </p>
 
-      <div className="flex flex-wrap gap-10 justify-center md:justify-start">
+      <div className="flex flex-wrap gap-5 justify-center md:justify-start">
         {getMovieRecommendations.data?.results.slice(0, 5).map((item) => (
           <div key={item.id}>
             <Card

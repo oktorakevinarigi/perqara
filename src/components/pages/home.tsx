@@ -4,7 +4,7 @@ import { DiscoverMovies, Banner } from "../feature";
 export function HomePage() {
   return (
     <>
-      <div className="bg-gray-default h-[66px]">
+      <div className="bg-body bg-opacity-5 h-[66px]">
         <Header />
       </div>
       <Banner />
